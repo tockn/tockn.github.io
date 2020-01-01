@@ -1,0 +1,5 @@
+baseURL = "https://tockn.dev"
+languageCode = "en-us"
+title = "tockn"
+theme = "introduction"
+caonifyurls = true
