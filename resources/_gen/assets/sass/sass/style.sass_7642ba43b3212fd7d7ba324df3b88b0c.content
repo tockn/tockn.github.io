@@ -1,4 +1,5 @@
 /* vietnamese */
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
 @font-face {
   font-family: "Nunito Sans";
   font-style: normal;
@@ -7147,6 +7148,19 @@ pre {
     .bold-title {
       font-size: 3rem;
       text-align: center; } }
+
+.bold-title-tockn {
+  font-size: 4rem;
+  margin-bottom: 0em; }
+  @media screen and (max-width: 768px) {
+    .bold-title-tockn {
+      font-size: 3rem;
+      text-align: center; } }
+
+.subtitle-tockn {
+  font-size: 1.5rem;
+  color: #222222;
+  margin-bottom: 0.4em; }
 
 .top-pad {
   padding-top: 1rem; }
