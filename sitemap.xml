@@ -3,11 +3,26 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://tockn.dev/tags/</loc>
+    <loc>https://tockn.dev/projects/hakonote/</loc>
+  </url>
+  
+  <url>
+    <loc>https://tockn.dev/projects/</loc>
+    <lastmod>2020-01-03T03:53:45+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://tockn.dev/</loc>
+    <lastmod>2020-01-03T03:53:45+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tockn.dev/projects/twitro/</loc>
+    <lastmod>2020-01-03T03:53:45+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tockn.dev/tags/</loc>
   </url>
   
 </urlset>
