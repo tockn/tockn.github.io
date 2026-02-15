@@ -1,0 +1,87 @@
+---
+import SocialLinks from "./SocialLinks.astro";
+---
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>Takuto Sato <span class="name-sub">(tockn)</span></h1>
+      <p class="tagline">Software Engineer</p>
+      <SocialLinks />
+    </div>
+    <div class="hero-avatar">
+      <img src="/images/avatar.png" alt="tockn" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 4rem 0 3rem;
+  }
+
+  .hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .hero-text h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .tagline {
+    color: var(--color-text-sub);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-avatar {
+    flex-shrink: 0;
+  }
+
+  .hero-avatar img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 2px solid var(--color-border);
+  }
+
+  .name-sub {
+    font-weight: 400;
+    font-size: 0.6em;
+    color: var(--color-text-sub);
+  }
+
+  @media (max-width: 640px) {
+    .hero-content {
+      flex-direction: column-reverse;
+      text-align: center;
+      align-items: center;
+    }
+
+    .hero-text {
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: 2rem;
+    }
+
+    .hero-avatar img {
+      width: 120px;
+      height: 120px;
+    }
+  }
+</style>

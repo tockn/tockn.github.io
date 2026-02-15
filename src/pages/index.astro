@@ -1,0 +1,77 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import BlogList from "@/components/BlogList.astro";
+import Timeline from "@/components/Timeline.astro";
+import { career } from "@/data/career";
+import { externalPosts } from "@/data/external-posts";
+
+const blogPosts = await getCollection("blog");
+
+const internalPosts = blogPosts.map((post) => ({
+  title: post.data.title,
+  date: post.data.date,
+  tags: post.data.tags,
+  href: `/blog/${post.id}`,
+}));
+
+const external = externalPosts.map((post) => ({
+  title: post.title,
+  date: post.date,
+  tags: post.tags,
+  href: post.url,
+  external: true,
+  platform: post.platform,
+}));
+
+const allPosts = [...internalPosts, ...external];
+---
+
+<BaseLayout>
+  <Hero />
+
+  <section class="section">
+    <div class="section-header">
+      <h2>Recent Posts</h2>
+      <a href="/blog" class="view-all">All Posts &rarr;</a>
+    </div>
+    <BlogList posts={allPosts} limit={3} />
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>Career</h2>
+      <a href="/about" class="view-all">More &rarr;</a>
+    </div>
+    <Timeline entries={career} limit={2} />
+  </section>
+</BaseLayout>
+
+<style>
+  .section {
+    padding: 2.5rem 0;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+
+  .view-all {
+    font-size: 0.85rem;
+    color: var(--color-text-sub);
+    transition: color 0.2s ease;
+  }
+
+  .view-all:hover {
+    color: var(--color-accent);
+  }
+</style>

@@ -1,0 +1,81 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BlogList from "@/components/BlogList.astro";
+import { externalPosts } from "@/data/external-posts";
+
+const blogPosts = await getCollection("blog");
+
+const internalPosts = blogPosts.map((post) => ({
+  title: post.data.title,
+  date: post.data.date,
+  tags: post.data.tags,
+  href: `/blog/${post.id}`,
+}));
+
+const external = externalPosts.map((post) => ({
+  title: post.title,
+  date: post.date,
+  tags: post.tags,
+  href: post.url,
+  external: true,
+  platform: post.platform,
+}));
+
+const allPosts = [...internalPosts, ...external];
+
+const postsByYear = allPosts
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  .reduce<Record<string, typeof allPosts>>((acc, post) => {
+    const year = new Date(post.date).getFullYear().toString();
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(post);
+    return acc;
+  }, {});
+
+const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a));
+---
+
+<BaseLayout title="Posts - tockn.dev" description="tockn の記事・登壇一覧">
+  <h1 class="page-title">Posts</h1>
+
+  {
+    years.map((year) => (
+      <section class="year-section">
+        <h2 class="year-heading">{year}</h2>
+        <BlogList posts={postsByYear[year]} />
+      </section>
+    ))
+  }
+
+  {
+    allPosts.length === 0 && (
+      <p class="empty">まだ記事がありません。</p>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .page-title {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .year-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .year-heading {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-sub);
+    margin-bottom: 0.75rem;
+  }
+
+  .empty {
+    color: var(--color-text-sub);
+    text-align: center;
+    padding: 3rem 0;
+  }
+</style>

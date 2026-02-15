@@ -1,0 +1,41 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Timeline from "@/components/Timeline.astro";
+import { career } from "@/data/career";
+---
+
+<BaseLayout title="About - tockn.dev" description="tockn の経歴">
+  <h1 class="page-title">About</h1>
+
+  <section class="intro">
+    <p>
+      Takuto Sato (tockn) — Software Engineer。<br />
+      Cloudbase, inc. でソフトウェアエンジニアをしています。
+    </p>
+  </section>
+
+  <section class="career-section">
+    <h2>Career</h2>
+    <Timeline entries={career} />
+  </section>
+</BaseLayout>
+
+<style>
+  .page-title {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .intro {
+    margin-bottom: 3rem;
+    line-height: 1.9;
+    color: var(--color-text);
+  }
+
+  .career-section h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+</style>

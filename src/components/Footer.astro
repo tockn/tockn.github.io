@@ -1,0 +1,26 @@
+---
+import SocialLinks from "./SocialLinks.astro";
+---
+
+<footer>
+  <SocialLinks />
+  <p class="copyright">&copy; {new Date().getFullYear()} tockn</p>
+</footer>
+
+<style>
+  footer {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 3rem 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .copyright {
+    font-size: 0.8rem;
+    color: var(--color-text-sub);
+  }
+</style>

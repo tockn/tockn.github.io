@@ -1,0 +1,144 @@
+---
+interface BlogItem {
+  title: string;
+  date: string;
+  tags: string[];
+  href: string;
+  external?: boolean;
+  platform?: "zenn" | "qiita";
+}
+
+interface Props {
+  posts: BlogItem[];
+  limit?: number;
+}
+
+const { posts, limit } = Astro.props;
+
+const sortedPosts = posts
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  .slice(0, limit);
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+}
+
+const platformLabels: Record<string, string> = {
+  zenn: "Zenn",
+  qiita: "Qiita",
+  speakerdeck: "SpeakerDeck",
+};
+---
+
+<ul class="blog-list">
+  {
+    sortedPosts.map((post) => (
+      <li class="blog-item">
+        <a
+          href={post.href}
+          target={post.external ? "_blank" : undefined}
+          rel={post.external ? "noopener noreferrer" : undefined}
+          class="blog-link"
+        >
+          <span class="blog-title">
+            {post.title}
+            {post.platform && (
+              <span class="platform-badge">{platformLabels[post.platform]}</span>
+            )}
+          </span>
+          <span class="blog-meta">
+            <time datetime={post.date}>{formatDate(post.date)}</time>
+            {post.tags.length > 0 && (
+              <span class="blog-tags">
+                {post.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </span>
+            )}
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .blog-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .blog-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .blog-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.875rem 0;
+    color: var(--color-text);
+    transition: color 0.2s ease;
+  }
+
+  .blog-link:hover {
+    color: var(--color-accent);
+  }
+
+  .blog-title {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .platform-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .blog-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-sub);
+  }
+
+  .blog-tags {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    color: var(--color-text-sub);
+  }
+
+  .tag::before {
+    content: "#";
+  }
+
+  @media (max-width: 640px) {
+    .blog-link {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+</style>

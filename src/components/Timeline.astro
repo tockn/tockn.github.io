@@ -1,0 +1,107 @@
+---
+import type { CareerEntry } from "@/data/career";
+
+interface Props {
+  entries: CareerEntry[];
+  limit?: number;
+}
+
+const { entries, limit } = Astro.props;
+const displayEntries = limit ? entries.slice(0, limit) : entries;
+---
+
+<div class="timeline">
+  {
+    displayEntries.map((entry) => (
+      <div class="timeline-entry">
+        <div class="timeline-marker" />
+        <div class="timeline-content">
+          <h3 class="timeline-company">{entry.company}</h3>
+          <span class="timeline-period">{entry.period}</span>
+          <p class="timeline-description">{entry.description}</p>
+          <div class="timeline-stack">
+            {entry.techStack.map((tech) => (
+              <span class="stack-tag">{tech}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .timeline {
+    position: relative;
+    padding-left: 1.75rem;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--color-border);
+  }
+
+  .timeline-entry {
+    position: relative;
+    padding-bottom: 2rem;
+  }
+
+  .timeline-entry:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-marker {
+    position: absolute;
+    left: -1.75rem;
+    top: 8px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--color-bg);
+    border: 2px solid var(--color-accent);
+  }
+
+  .timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .timeline-company {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .timeline-period {
+    font-size: 0.85rem;
+    color: var(--color-text-sub);
+  }
+
+  .timeline-description {
+    margin-top: 0.25rem;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .timeline-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+
+  .stack-tag {
+    font-size: 0.75rem;
+    color: var(--color-text-sub);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    padding: 0.15em 0.5em;
+    border-radius: 3px;
+  }
+</style>

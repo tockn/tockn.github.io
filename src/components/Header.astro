@@ -1,0 +1,72 @@
+---
+const navLinks = [
+  { href: "/blog", label: "Posts" },
+  { href: "/about", label: "About" },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header>
+  <nav>
+    <a href="/" class="logo">tockn</a>
+    <div class="nav-links">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={["nav-link", { active: currentPath.startsWith(link.href) }]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>
+
+<style>
+  header {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+  }
+
+  nav {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    letter-spacing: -0.02em;
+  }
+
+  .logo:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    color: var(--color-text-sub);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--color-text);
+  }
+</style>
